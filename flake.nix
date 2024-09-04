@@ -1,29 +1,58 @@
 {
-  description = "Home Manager configuration of obi";
+  description = "A very basic flake";
 
   inputs = {
-    # Specify the source of Home Manager and Nixpkgs.
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
-  outputs = { nixpkgs, home-manager, ... }:
-    let
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
-    in {
-      homeConfigurations."obi" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
+  outputs = {nixpkgs, home-manager, nixos-wsl, ... }@inputs: {
 
-        # Specify your home configuration modules here, for example,
-        # the path to your home.nix.
-        modules = [ ./home.nix ];
+    nixosConfigurations = {
 
-        # Optionally use extraSpecialArgs
-        # to pass through arguments to home.nix
-      };
+      nixos-wsl = let
+        username = "obi";
+        specialArgs = {inherit username};
+      
+      in
+        nixpkgs.lib.nixosSystem {
+          inherit specialArgs;
+          system = "x86_64-linux";
+          modules = [
+            nixos-wsl.nixosModules.default
+            {
+              wsl = {
+                enable = true;
+                defaultUser = "${username}";
+              };
+            }
+
+            home-manager.nixosModules.home-manager {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+
+              home-manager.extraSpecialArgs = inputs // specialArgs;
+              home-manager.users.${username} = ./users/${username}/home.nix;
+            }
+          ];
+        };
+        environment.systemPackages = with nixpkgs;[
+        vim
+        git
+        curl
+        wget
+        ];
     };
+    
+  };
 }
