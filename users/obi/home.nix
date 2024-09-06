@@ -87,8 +87,10 @@
     # Add more configuration options as needed
     format = "[](fg:#7DF9AA)\[󱄅 ](bg:#7DF9AA fg:#090c0c)\[](fg:#7DF9AA bg:#1C3A5E)\$time\[](fg:#1C3A5E bg:#3B76F0)\$directory\[](fg:#3B76F0 bg:#FCF392)\$git_branch\$git_status\$git_metrics\$character";
     directory = {
-      format = "[ ﱮ $path ]($style)";
-      style = "fg:#E4E4E4 bg:#3B76F0";
+        format = "[  $path ]($style)";
+        style = "fg:#E4E4E4 bg:#3B76F0";
+        truncation_length = 2;
+        truncation_symbol = "...";
       };
 
     git_branch = {
