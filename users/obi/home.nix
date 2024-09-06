@@ -82,12 +82,12 @@
 
         {
           plugin = nvim-lspconfig;
-          config = toLuaFile ./nvim/plugin/lsp.lua;
+          config = toLuaFile ../../programs/nvim/plugin/lsp.lua;
         }
 
         {
           plugin = comment-nvim;
-          config = toLua "require(\"Comment\".setup()";
+          config = toLua "require(\"Comment\").setup()";
         }
 
          {
@@ -99,12 +99,12 @@
 
         {
           plugin = nvim-cmp;
-          config = toLuaFile ./nvim/plugin/cmp.lua;
+          config = toLuaFile ../../programs/nvim/plugin/cmp.lua;
         }
 
         {
           plugin = telescope-nvim;
-          config = toLuaFile ./nvim/plugin/telescope.lua;
+          config = toLuaFile ../../programs/nvim/plugin/telescope.lua;
         }
 
         telescope-fzf-native-nvim
@@ -129,12 +129,12 @@
             p.tree-sitter-python
             p.tree-sitter-json
           ]));
-          config = toLuaFile ./nvim/plugin/treesitter.lua;
+          config = toLuaFile ../../programs/nvim/plugin/treesitter.lua;
         }
         
         {
           plugin = conform-nvim;
-          config = toLuaFile ./nvim/plugin/conform.lua;
+          config = toLuaFile ../../programs/nvim/plugin/conform.lua;
         }
 
         # {
@@ -146,7 +146,8 @@
       ];
 
       extraLuaConfig = ''
-        ${builtins.readFile ./nvim/options.lua}
+        ${builtins.readFile ../../programs/nvim/options.lua}
+        ${builtins.readFile ../../programs/nvim/init.lua}
       '';
     };
 

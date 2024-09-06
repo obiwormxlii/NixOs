@@ -22,7 +22,7 @@
 
       nixos-wsl = let
         username = "obi";
-        specialArgs = {inherit username};
+        specialArgs = {inherit username;};
       
       in
         nixpkgs.lib.nixosSystem {
@@ -35,6 +35,7 @@
                 enable = true;
                 defaultUser = "${username}";
               };
+              nixpkgs.config.allowUnfree = true;
             }
 
             home-manager.nixosModules.home-manager {
