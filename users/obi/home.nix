@@ -142,13 +142,24 @@
         #   config = "colorscheme onedark";
         # }
 
-        codeium-nvim
+        {
+      plugin = codeium-nvim;
+      type = "lua";
+      config = ''
+        require('codeium').setup({})
+      '';
+    }
       ];
 
       extraLuaConfig = ''
-        ${builtins.readFile ../../programs/nvim/options.lua}
-        ${builtins.readFile ../../programs/nvim/init.lua}
-      '';
+  
+  ${builtins.readFile ../../programs/nvim/options.lua}
+
+  ${builtins.readFile ../../programs/nvim/plugin/lsp.lua}
+
+'';
+
+
     };
 
 }
