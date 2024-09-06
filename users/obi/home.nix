@@ -126,7 +126,7 @@
 
     time = {
         disabled = false;
-        time_format = "%R"; # Hour:Minute Format
+        time_format = "%a %b %d, %I:%M"; # Hour:Minute Format
         style = "bg:#1d2230";
         format = ''[[ 󱑍 $time ](bg:#1C3A5E fg:#8DFBD2)]($style)'';
       };
