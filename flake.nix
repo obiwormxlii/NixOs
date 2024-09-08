@@ -23,7 +23,7 @@
       nixos-wsl = let
         username = "obi";
         specialArgs = {inherit username;};
-      
+
       in
         nixpkgs.lib.nixosSystem {
           inherit specialArgs;
@@ -54,6 +54,6 @@
         wget
         ];
     };
-    
+
   };
 }
