@@ -47,6 +47,13 @@
             }
           ];
         };
+      settings = {
+      experimental-features = [ "nix-command" "flakes" ];
+        extra-experimental-features = ["nix-command"];
+      };
+
+      system.stateVersion = "24.05";
+
         environment.systemPackages = with nixpkgs;[
         vim
         git
