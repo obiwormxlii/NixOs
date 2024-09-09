@@ -39,8 +39,8 @@ programs.starship = {
         symbol = " ";
       };
 
-    cmd_diration = {
-        format = ''[  $duration ]($style)'';
+    cmd_duration = {
+        format = ''[  $duration ]($style)'';
         style = "fg:bright-white bg:18";
       };
 
