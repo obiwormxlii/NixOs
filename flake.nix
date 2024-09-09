@@ -52,6 +52,7 @@
         git
         curl
         wget
+        fzf
         ];
     };
 
