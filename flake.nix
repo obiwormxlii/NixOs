@@ -68,8 +68,9 @@ outputs = {nixpkgs, home-manager, nixos-wsl, ... }@inputs: {
           home-manager.useUserPackages = true;
           home-manager.extraSpecialArgs = inputs // specialArgs;
           home-manager.users.${username} = ./users/${username}/home.nix;
-home-manager.backupFileExtension = "backup";          
+          home-manager.backupFileExtension = "backup";
         }
+        ./programs/gaming
       ];
     };
   };
