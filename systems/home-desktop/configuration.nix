@@ -10,6 +10,7 @@
       ./hardware-configuration.nix
     ];
 
+  nix.settings.experimental-features  = ["nix-command" "flakes"];
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -45,7 +46,7 @@
   # Enable the X11 windowing system.
   # You can disable this if you're only using the Wayland session.
   services.xserver.enable = true;
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
   };
 
@@ -57,13 +58,36 @@
     powerManagement.finegrained = false;
     open = false;
     nvidiaSettings = true;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
   # Enable the KDE Plasma Desktop Environment.
-  services.displayManager.sddm.enable = true;
-
-  services.displayManager.sddm.settings.General.DisplayServer = "x11-user";
-  services.desktopManager.plasma6.enable = true;
+  services.displayManager.sddm.enable = false;
+  services.xserver = {
+    displayManager.gdm.enable = true;
+    desktopManager.gnome.enable = true;
+  };
+services.xserver.xrandrHeads = [
+  {
+    output = "DP-0";
+    primary = true;
+    monitorConfig = ''
+      Option "Position" "0 240"
+      Option "Rate" "144"
+      Option "Mode" "2560x1440"
+    '';
+  }
+  {
+    output = "DVI-D-0"; 
+    monitorConfig = ''
+      Option "Position" "2560 0"
+      Option "Rotate" "left"
+      Option "Mode" "1920x1080"
+    '';
+  }
+];
+  #  services.displayManager.sddm.settings.General.DisplayServer = "x11-user";
+  #  services.desktopManager.plasma6.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
