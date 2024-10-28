@@ -32,6 +32,7 @@
   home.packages = with pkgs;[
     nixfmt-rfc-style
 
+    direnv
     (nerdfonts.override { fonts = [ "FiraCode" "JetBrainsMono" "Ubuntu" ];})
   ];
 
@@ -71,6 +72,7 @@
     enable = true;
     initExtra = ''
       eval "$(starship init bash)"
+      eval "$(direnv hook bash)"
     '';
   };
 
