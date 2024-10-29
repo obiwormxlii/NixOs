@@ -3,10 +3,7 @@
   pkgs,
   inputs,
   ...
-}:
-
-{
-
+}: {
   imports = [
     ./neovim.nix
     ./starship.nix
@@ -29,29 +26,27 @@
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = with pkgs;[
+  home.packages = with pkgs; [
     nixfmt-rfc-style
 
     direnv
-    (nerdfonts.override { fonts = [ "FiraCode" "JetBrainsMono" "Ubuntu" ];})
+    (nerdfonts.override {fonts = ["FiraCode" "JetBrainsMono" "Ubuntu"];})
   ];
 
   fonts.fontconfig = {
     enable = true;
     defaultFonts = {
-    serif = ["Firacode Nerd Font"];
-    sansSerif = ["JetBrainsMono Nerd Font"];
-    monospace = ["JetBrainsMono Nerd Font"];
+      serif = ["Firacode Nerd Font"];
+      sansSerif = ["JetBrainsMono Nerd Font"];
+      monospace = ["JetBrainsMono Nerd Font"];
     };
   };
 
-  home.file = {
-  };
+  home.file = {};
 
   home.sessionVariables = {
     EDITOR = "nvim";
   };
-
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -67,7 +62,7 @@
   programs.gh = {
     enable = true;
   };
-  
+
   programs.bash = {
     enable = true;
     initExtra = ''
@@ -84,8 +79,5 @@
       enable = true;
       theme = "jonathan";
     };
-
   };
-
-
 }

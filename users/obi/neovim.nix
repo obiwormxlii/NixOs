@@ -1,15 +1,13 @@
 {
-pkgs,
-config,
-...
+  pkgs,
+  config,
+  ...
 }: {
   programs = {
-    neovim =
-    let
+    neovim = let
       toLua = str: "lua << EOF\n${str}\nEOF\n";
       toLuaFile = file: "lua << EOF\n${builtins.readFile file}\nEOF\n";
-    in
-    {
+    in {
       enable = true;
 
       viAlias = true;
@@ -24,7 +22,6 @@ config,
       ];
 
       plugins = with pkgs.vimPlugins; [
-
         {
           plugin = nvim-lspconfig;
           config = toLuaFile ../../programs/nvim/plugin/lsp.lua;
@@ -35,10 +32,10 @@ config,
           config = toLua "require(\"Comment\").setup()";
         }
 
-         {
+        {
           plugin = gruvbox-nvim;
-           config = "colorscheme gruvbox";
-         }
+          config = "colorscheme gruvbox";
+        }
 
         neodev-nvim
 
@@ -66,17 +63,17 @@ config,
         vim-nix
 
         {
-          plugin = (nvim-treesitter.withPlugins (p: [
+          plugin = nvim-treesitter.withPlugins (p: [
             p.tree-sitter-nix
             p.tree-sitter-vim
             p.tree-sitter-bash
             p.tree-sitter-lua
             p.tree-sitter-python
             p.tree-sitter-json
-          ]));
+          ]);
           config = toLuaFile ../../programs/nvim/plugin/treesitter.lua;
         }
-        
+
         {
           plugin = conform-nvim;
           config = toLuaFile ../../programs/nvim/plugin/conform.lua;
@@ -88,23 +85,21 @@ config,
         # }
 
         {
-      plugin = codeium-nvim;
-      type = "lua";
-      config = ''
-        require('codeium').setup({})
-      '';
-    }
+          plugin = codeium-nvim;
+          type = "lua";
+          config = ''
+            require('codeium').setup({})
+          '';
+        }
       ];
 
       extraLuaConfig = ''
-  
-  ${builtins.readFile ../../programs/nvim/options.lua}
 
-  ${builtins.readFile ../../programs/nvim/plugin/lsp.lua}
+        ${builtins.readFile ../../programs/nvim/options.lua}
 
-'';
+        ${builtins.readFile ../../programs/nvim/plugin/lsp.lua}
 
-
+      '';
     };
   };
 }

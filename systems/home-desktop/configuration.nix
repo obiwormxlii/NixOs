@@ -1,22 +1,23 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, ... }:
-
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  config,
+  pkgs,
+  ...
+}: {
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
-  nix.settings.experimental-features  = ["nix-command" "flakes"];
+  nix.settings.experimental-features = ["nix-command" "flakes"];
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "nixos"; # Define your hostname.
-#  networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  #  networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -67,25 +68,25 @@
     displayManager.gdm.enable = true;
     desktopManager.gnome.enable = true;
   };
-services.xserver.xrandrHeads = [
-  {
-    output = "DP-0";
-    primary = true;
-    monitorConfig = ''
-      Option "Position" "0 240"
-      Option "Rate" "144"
-      Option "Mode" "2560x1440"
-    '';
-  }
-  {
-    output = "DVI-D-0"; 
-    monitorConfig = ''
-      Option "Position" "2560 0"
-      Option "Rotate" "left"
-      Option "Mode" "1920x1080"
-    '';
-  }
-];
+  services.xserver.xrandrHeads = [
+    {
+      output = "DP-0";
+      primary = true;
+      monitorConfig = ''
+        Option "Position" "0 240"
+        Option "Rate" "144"
+        Option "Mode" "2560x1440"
+      '';
+    }
+    {
+      output = "DVI-D-0";
+      monitorConfig = ''
+        Option "Position" "2560 0"
+        Option "Rotate" "left"
+        Option "Mode" "1920x1080"
+      '';
+    }
+  ];
   #  services.displayManager.sddm.settings.General.DisplayServer = "x11-user";
   #  services.desktopManager.plasma6.enable = true;
 
@@ -121,10 +122,10 @@ services.xserver.xrandrHeads = [
   users.users.obi = {
     isNormalUser = true;
     description = "Bailey Brayton";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = ["networkmanager" "wheel"];
     packages = with pkgs; [
       kdePackages.kate
-    #  thunderbird
+      #  thunderbird
     ];
   };
 
@@ -145,7 +146,7 @@ services.xserver.xrandrHeads = [
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     git
     gh
@@ -177,5 +178,4 @@ services.xserver.xrandrHeads = [
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.05"; # Did you read the comment?
-
 }
