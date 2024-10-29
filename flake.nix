@@ -76,6 +76,8 @@
           inherit specialArgs;
           system = "x86_64-linux";
           modules = [
+            nix-ld.nixosModules.nix-ld
+            {programs.nix-ld.dev.enable = true;}
             ./systems/home-desktop/configuration.nix
             home-manager.nixosModules.home-manager
             {
