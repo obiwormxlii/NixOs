@@ -14,10 +14,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-ld.url = "github:Mic92/nix-ld";
+    nix-ld.inputs.nixpkgs.follows = "nixpkgs";
+
   };
   
 
-outputs = {nixpkgs, home-manager, nixos-wsl, ... }@inputs: {
+outputs = {nixpkgs, home-manager, nixos-wsl, nix-ld, ... }@inputs: {
   nixosConfigurations = {
     nixos-wsl = let
       username = "obi";
@@ -25,7 +28,9 @@ outputs = {nixpkgs, home-manager, nixos-wsl, ... }@inputs: {
     in nixpkgs.lib.nixosSystem {
       inherit specialArgs;
       system = "x86_64-linux";
-      modules = [
+          modules = [
+            nix-ld.nixosModules.nix-ld
+            {programs.nix-ld.dev.enable = true;}
   nixos-wsl.nixosModules.default
   ({ pkgs, ... }: {
     wsl = {
